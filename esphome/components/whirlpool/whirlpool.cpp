@@ -81,7 +81,7 @@ void WhirlpoolClimate::transmit_state() {
   remote_state[3] |= (uint8_t)(temp - this->temperature_min_()) << 4;
 
   // Fan speed
-  switch (this->fan_mode) {
+  switch (this->fan_mode.value()) {
     case climate::CLIMATE_FAN_HIGH:
       remote_state[2] |= WHIRLPOOL_FAN_HIGH;
       break;
@@ -105,7 +105,7 @@ void WhirlpoolClimate::transmit_state() {
   }
 
   // Checksum
-  for (uint8_t i = 2; i < 12; i++)
+  for (uint8_t i = 2; i < 13; i++)
     remote_state[13] ^= remote_state[i];
   for (uint8_t i = 14; i < 20; i++)
     remote_state[20] ^= remote_state[i];
@@ -184,7 +184,7 @@ bool WhirlpoolClimate::on_receive(remote_base::RemoteReceiveData data) {
   uint8_t checksum13 = 0;
   uint8_t checksum20 = 0;
   // Calculate  checksum and compare with signal value.
-  for (uint8_t i = 2; i < 12; i++)
+  for (uint8_t i = 2; i < 13; i++)
     checksum13 ^= remote_state[i];
   for (uint8_t i = 14; i < 20; i++)
     checksum20 ^= remote_state[i];
