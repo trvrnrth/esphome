@@ -1,5 +1,5 @@
 #include "shelly_dimmer.h"
-#include "firmware_v515.h"
+#include "firmware_v516.h"
 #include "stm32flash.h"
 
 namespace esphome {
